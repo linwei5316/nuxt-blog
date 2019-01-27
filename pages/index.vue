@@ -7,7 +7,9 @@
 <script>
 
 export default {
-  
+  head: {
+    title: 'WELCOME!'
+  }
 }
 </script>
 

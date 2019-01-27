@@ -16,6 +16,14 @@ export default () => new Store({
   mutations: {
     SET_POSTS(state, posts){
       state.posts = posts
+    },
+    ADD_POST(state, post){
+      state.posts.push(post)
+    },
+    EDIT_POST(state, post){
+      const targetIndex = state.posts.findIndex(({id}) => id === post.id)
+      
+      state.posts[targetIndex] = { ...post }
     }
   },
   actions: {
@@ -46,8 +54,15 @@ export default () => new Store({
     async addPost({commit}, postData){
       const API = process.env.API + 'posts.json' 
 
-      await axios.post(API, postData)
-        .then(({data}) => console.log(data))
+      return await axios.post(API, postData)
+        .then(({data}) => {
+
+          commit('ADD_POST', {
+            ...postData,
+            id: data.name
+          })
+        
+        })
     },
     async getPost({commit}, id){
       const API = `${process.env.API}posts/${id}.json`
@@ -59,7 +74,9 @@ export default () => new Store({
       const API = `${process.env.API}posts/${id}.json`
 
       return await axios.put(API, post)
-        .then(({data}) => console.log(data))
+        .then(({data}) => {
+          commit('EDIT_POST', data)
+        })
     }
   }
 })
