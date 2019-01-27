@@ -28,14 +28,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import InputGroup from '~/components/UI/InputGroup.vue'
-import AppButton from '~/components/UI/AppButton.vue'
 
 export default {
-  components: {
-    AppButton,
-    InputGroup,
-  },
   props: {
     postData: {
       type: Object,

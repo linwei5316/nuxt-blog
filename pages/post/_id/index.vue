@@ -10,12 +10,8 @@
 
 <script>
 import axios from 'axios'
-import AppButton from '~/components/UI/AppButton.vue'
 
 export default {
-  components: {
-    AppButton
-  },
   data(){
     return {
       fuck: ''
