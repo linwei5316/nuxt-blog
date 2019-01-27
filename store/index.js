@@ -3,9 +3,6 @@ import Vuex, { Store } from 'vuex'
 
 Vue.use(Vuex)
 
-import axios from 'axios'
-
-
 export default () => new Store({
   state: {
     posts: []
@@ -27,7 +24,7 @@ export default () => new Store({
     }
   },
   actions: {
-    async nuxtServerInit({dispatch}, context){
+    async nuxtServerInit({dispatch}, {app: {$axios}}){
       console.log('nuxtServerInit executed!')
 
       await dispatch('getPosts')
@@ -35,7 +32,9 @@ export default () => new Store({
     async getPosts({commit}){
       const API = process.env.API + 'posts.json'
 
-      await axios.get(API)
+      console.log('axios', this.$axios.get)
+
+      await this.$axios.get(API)
         .then(({data}) => {
 
           const dataArray = []
@@ -54,7 +53,7 @@ export default () => new Store({
     async addPost({commit}, postData){
       const API = process.env.API + 'posts.json' 
 
-      return await axios.post(API, postData)
+      return await this.$axios.post(API, postData)
         .then(({data}) => {
 
           commit('ADD_POST', {
@@ -67,13 +66,13 @@ export default () => new Store({
     async getPost({commit}, id){
       const API = `${process.env.API}posts/${id}.json`
 
-      return await axios.get(API)
+      return await this.$axios.get(API)
         .then(({data}) => data)
     },
     async editPost({commit}, {post, id}){
       const API = `${process.env.API}posts/${id}.json`
 
-      return await axios.put(API, post)
+      return await this.$axios.put(API, post)
         .then(({data}) => {
           commit('EDIT_POST', data)
         })
