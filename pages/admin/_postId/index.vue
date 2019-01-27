@@ -31,9 +31,6 @@ export default {
       post: { ...post }
     }
   },
-  // computed: {
-  //   ...mapState(['posts']),
-  // },
   methods: {
     ...mapActions(['editPost']),
     submitHandler(post){
@@ -48,6 +45,7 @@ export default {
         },
         id: this.$route.params.postId
       })
+        .then(() => this.$router.push('/admin'))
     }
   },
 }

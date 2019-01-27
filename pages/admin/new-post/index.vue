@@ -38,6 +38,7 @@ export default {
         ...post,
         previewContent
       })
+        .then(() => this.$router.push('/admin'))
     }
   },
 }
